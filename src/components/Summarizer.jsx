@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { jsPDF } from "jspdf";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Summarizer = () => {
   const [file, setFile] = useState(null);
@@ -7,10 +9,12 @@ const Summarizer = () => {
   const [loading, setLoading] = useState(false);
   const [length, setLength] = useState("medium");
   const [darkMode, setDarkMode] = useState(true);
+  const [error, setError] = useState("");
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     setSummary("");
+    setError("");
   };
 
   const handleSubmit = async () => {
@@ -21,6 +25,7 @@ const Summarizer = () => {
 
     setLoading(true);
     setSummary("");
+    setError("");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -31,17 +36,17 @@ const Summarizer = () => {
         method: "POST",
         body: formData,
       });
-      
+
       const data = await response.json();
 
       if (response.ok) {
         setSummary(data.summary);
       } else {
-        alert(data.error || "Something went wrong");
+        setError(data.error || "Something went wrong");
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Something went wrong. Try again!");
+      setError("Something went wrong. Try again!");
     }
 
     setLoading(false);
@@ -61,6 +66,16 @@ const Summarizer = () => {
     const lines = doc.splitTextToSize(summary, 180);
     doc.text(lines, 10, 20);
     doc.save("summary.pdf");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      alert("Logged out successfully");
+      window.location.reload();
+    } catch (err) {
+      alert("Logout failed");
+    }
   };
 
   const currentStyles = {
@@ -98,22 +113,27 @@ const Summarizer = () => {
       <div style={styles.headingWrapper}>
         <div>
           <h1 style={styles.heading}>
-            <span style={{ color: "#00bfff" }}>Nextract</span> 
+            <span style={{ color: "#00bfff" }}>Nextract</span>
           </h1>
           <p style={styles.tagline}>
             "Extract the Future, Summarize the Now."
           </p>
         </div>
 
-        <label style={styles.toggleSwitch}>
-          <input
-            type="checkbox"
-            checked={darkMode}
-            onChange={() => setDarkMode(!darkMode)}
-            style={styles.toggleSwitchInput}
-          />
-          <span style={styles.slider}></span>
-        </label>
+        <div>
+          <label style={styles.toggleSwitch}>
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+              style={styles.toggleSwitchInput}
+            />
+            <span style={styles.slider}></span>
+          </label>
+          <button onClick={handleLogout} style={{ ...styles.button, marginTop: "10px", backgroundColor: "#ff5c5c" }}>
+            Logout
+          </button>
+        </div>
       </div>
 
       <div style={currentStyles.card}>
@@ -123,6 +143,7 @@ const Summarizer = () => {
           onChange={handleFileChange}
           style={currentStyles.input}
         />
+        {file && <p style={{ marginTop: "5px", fontSize: "0.9rem" }}>📄 {file.name}</p>}
 
         <select
           value={length}
@@ -137,6 +158,10 @@ const Summarizer = () => {
         <button onClick={handleSubmit} disabled={loading} style={styles.button}>
           {loading ? <span style={styles.spinner}></span> : "Upload & Summarize"}
         </button>
+
+        {error && (
+          <p style={{ color: "#ff5c5c", marginTop: "15px", textAlign: "center" }}>{error}</p>
+        )}
 
         {summary && (
           <div style={currentStyles.summaryBox}>
@@ -172,9 +197,11 @@ const styles = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    maxWidth: "600px",
+    maxWidth: "800px",
     margin: "auto",
     marginBottom: "40px",
+    flexWrap: "wrap",
+    gap: "10px",
   },
   heading: {
     fontSize: "2.5rem",
@@ -242,6 +269,7 @@ const styles = {
     display: "inline-block",
     width: "50px",
     height: "24px",
+    marginRight: "10px",
   },
   toggleSwitchInput: {
     opacity: 0,
