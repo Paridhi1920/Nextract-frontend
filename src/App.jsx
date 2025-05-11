@@ -25,11 +25,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={user ? <Navigate to="/summarize" /> : <Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route
-          path="/summarize"
-          element={user ? <Summarizer /> : <Navigate to="/" />}
-        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />      
+        <Route path="/summarize" element={user ? <Summarizer /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );
