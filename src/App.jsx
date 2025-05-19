@@ -8,6 +8,7 @@ import Signup from './pages/Signup';
 import Summarizer from './components/Summarizer';
 import Home from './pages/Home';
 import About from './pages/About';
+import Navbar from './components/Navbar';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -25,11 +26,12 @@ function App() {
 
   return (
     <Router>
+      <Navbar user={user} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/login" element={user ? <Navigate to="/summarize" /> : <Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />      
         <Route path="/summarize" element={user ? <Summarizer /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
