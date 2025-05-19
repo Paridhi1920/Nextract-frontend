@@ -1,12 +1,68 @@
+import React, { useState } from "react";
+
 const About = () => {
+  const [darkMode, setDarkMode] = useState(true);
+
+  const styles = {
+    page: {
+      minHeight: "100vh",
+      backgroundColor: darkMode ? "#0f0f1a" : "#f5f5f5",
+      color: darkMode ? "#ffffff" : "#000000",
+      padding: "40px 20px",
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+    },
+    heading: {
+      fontSize: "2rem",
+      textAlign: "center",
+      color: "#00bfff",
+      marginBottom: "30px",
+    },
+    section: {
+      maxWidth: "800px",
+      margin: "auto",
+      marginBottom: "30px",
+      lineHeight: "1.6",
+    },
+    toggle: {
+      position: "absolute",
+      top: "20px",
+      right: "20px",
+      cursor: "pointer",
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white px-6 py-12">
-      <h2 className="text-3xl font-semibold mb-4">About Nextract</h2>
-      <p className="text-lg max-w-3xl">
-        Nextract is an AI-powered summarization tool that allows users to upload documents like PDFs, PPTs, or Word files and receive accurate summaries instantly.
-        <br /><br />
-        Built using modern technologies like React, Flask, Firebase, and HuggingFace Transformers, Nextract ensures speed, accuracy, and simplicity — helping users save time and focus on what really matters.
-      </p>
+    <div style={styles.page}>
+      <label style={styles.toggle}>
+        <input
+          type="checkbox"
+          checked={darkMode}
+          onChange={() => setDarkMode(!darkMode)}
+        />
+        🌙
+      </label>
+      <h1 style={styles.heading}>About Nextract</h1>
+      <div style={styles.section}>
+        <p>
+          <strong>Nextract</strong> is an AI-powered summarization platform that allows you to
+          upload PDF, DOCX, and PPTX files and receive a clean, context-aware summary in your
+          preferred length—Short, Medium, or Detailed.
+        </p>
+        <p>
+          This platform leverages modern NLP techniques including Transformer models (via
+          HuggingFace), combined with a sleek React.js frontend and Flask-based backend.
+        </p>
+      </div>
+      <div style={styles.section}>
+        <h2 style={{ color: "#00bfff" }}>Features</h2>
+        <ul>
+          <li>✅ File upload support for .pdf, .docx, .pptx</li>
+          <li>✅ Abstractive summarization</li>
+          <li>✅ Download as PDF or TXT</li>
+          <li>✅ Light/Dark theme toggle</li>
+          <li>✅ Firebase Authentication</li>
+        </ul>
+      </div>
     </div>
   );
 };

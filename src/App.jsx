@@ -7,8 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Summarizer from './components/Summarizer';
 import Home from './pages/Home';
-import About from './pages/About';
-import Navbar from './components/Navbar';
+import About from './pages/About'; // ✅ Make sure this file exists inside /pages/
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,20 +18,27 @@ function App() {
       setUser(currentUser);
       setAuthChecked(true);
     });
-    return () => unsubscribe();
+    return () => unsubscribe(); // Cleanup
   }, []);
 
   if (!authChecked) return <div className="text-white text-center mt-10">Loading...</div>;
 
   return (
     <Router>
-      <Navbar user={user} />
       <Routes>
+        {/* ✅ Landing page */}
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        
+        {/* ✅ Public routes */}
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />      
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/about" element={<About />} />
+
+        {/* ✅ Protected route */}
         <Route path="/summarize" element={user ? <Summarizer /> : <Navigate to="/login" />} />
+
+        {/* ✅ Fallback: Redirect unknown paths to home */}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );

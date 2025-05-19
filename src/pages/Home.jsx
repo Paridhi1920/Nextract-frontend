@@ -1,22 +1,116 @@
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const [darkMode, setDarkMode] = useState(true);
+  const navigate = useNavigate();
+
+  const styles = {
+    page: {
+      minHeight: "100vh",
+      backgroundColor: darkMode ? "#0f0f1a" : "#f5f5f5",
+      color: darkMode ? "#ffffff" : "#000000",
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      padding: "20px",
+    },
+    navbar: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "40px",
+    },
+    heading: {
+      fontSize: "2rem",
+      fontWeight: "bold",
+      color: "#00bfff",
+    },
+    navLinks: {
+      display: "flex",
+      gap: "20px",
+    },
+    navBtn: {
+      background: "none",
+      border: "none",
+      color: darkMode ? "#ffffff" : "#000000",
+      cursor: "pointer",
+      fontSize: "1rem",
+      fontWeight: "bold",
+    },
+    toggle: {
+      cursor: "pointer",
+    },
+    hero: {
+      textAlign: "center",
+      marginTop: "80px",
+    },
+    tagline: {
+      fontSize: "1.2rem",
+      fontStyle: "italic",
+      marginBottom: "20px",
+      color: "#cccccc",
+    },
+    cta: {
+      marginTop: "30px",
+      display: "flex",
+      justifyContent: "center",
+      gap: "20px",
+    },
+    button: {
+      backgroundColor: "#00bfff",
+      color: "#fff",
+      padding: "12px 24px",
+      border: "none",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      fontSize: "1rem",
+      cursor: "pointer",
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white px-4 py-12">
-      <header className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Nextract</h1>
-        <p className="text-lg mb-6 max-w-xl mx-auto">
-          Upload your documents (PDF, PPT, DOCX) and get summarized content in seconds!
-        </p>
-        <div className="flex justify-center space-x-4">
-          <Link to="/login" className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md">
+    <div style={styles.page}>
+      <div style={styles.navbar}>
+        <div style={styles.heading}>Nextract</div>
+        <div style={styles.navLinks}>
+          <button style={styles.navBtn} onClick={() => navigate("/")}>
+            Home
+          </button>
+          <button style={styles.navBtn} onClick={() => navigate("/about")}>
+            About
+          </button>
+          <button style={styles.navBtn} onClick={() => navigate("/login")}>
             Login
-          </Link>
-          <Link to="/signup" className="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-md">
-            Sign Up
-          </Link>
+          </button>
+          <label style={styles.toggle}>
+            <input
+              type="checkbox"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+            />
+            🌙
+          </label>
         </div>
-      </header>
+      </div>
+
+      <div style={styles.hero}>
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "10px" }}>
+          Summarize Smarter with <span style={{ color: "#00bfff" }}>Nextract</span>
+        </h1>
+        <p style={styles.tagline}>
+          Extract the Future, Summarize the Now.
+        </p>
+        <div style={styles.cta}>
+          <button style={styles.button} onClick={() => navigate("/login")}>
+            Get Started
+          </button>
+          <button
+            style={{ ...styles.button, backgroundColor: "#ff5c5c" }}
+            onClick={() => navigate("/about")}
+          >
+            Learn More
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

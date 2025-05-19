@@ -1,32 +1,44 @@
-import { Link } from 'react-router-dom';
+// Navbar.jsx
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Navbar = ({ user }) => {
+const Navbar = ({ darkMode }) => {
+  const navStyle = {
+    backgroundColor: darkMode ? "#1e1e2f" : "#ffffff",
+    color: darkMode ? "#ffffff" : "#000000",
+    padding: "10px 20px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottom: darkMode ? "1px solid #333" : "1px solid #ccc",
+  };
+
+  const linkStyle = {
+    margin: "0 10px",
+    textDecoration: "none",
+    color: darkMode ? "#00bfff" : "#007acc",
+    fontWeight: "bold",
+  };
+
   return (
-    <nav className="bg-[#1e293b] text-white px-6 py-4 shadow-md flex justify-between items-center">
-      <div className="text-xl font-bold">Nextract</div>
-      <ul className="flex space-x-6">
-        <li>
-          <Link to="/" className="hover:text-blue-400">Home</Link>
-        </li>
-        <li>
-          <Link to="/about" className="hover:text-blue-400">About</Link>
-        </li>
-        {!user ? (
-          <>
-            <li>
-              <Link to="/login" className="hover:text-blue-400">Login</Link>
-            </li>
-            <li>
-              <Link to="/signup" className="hover:text-blue-400">Sign Up</Link>
-            </li>
-          </>
-        ) : (
-          <li>
-            <Link to="/summarize" className="hover:text-blue-400">Summarize</Link>
-          </li>
-        )}
-      </ul>
-    </nav>
+    <div style={navStyle}>
+      <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+        <Link to="/" style={linkStyle}>
+          Nextract
+        </Link>
+      </h2>
+      <div>
+        <Link to="/" style={linkStyle}>
+          Home
+        </Link>
+        <Link to="/about" style={linkStyle}>
+          About
+        </Link>
+        <Link to="/login" style={linkStyle}>
+          Login
+        </Link>
+      </div>
+    </div>
   );
 };
 
