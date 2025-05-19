@@ -1,12 +1,34 @@
-# React + Vite
+#  Nextract - AI-Powered PDF Summarizer (Frontend)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nextract is an AI-powered document summarizer that allows users to upload `.pdf`, `.pptx`, or `.docx` files and receive concise summaries in various formats. It also offers login/signup via Firebase Auth and a responsive modern UI.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+Frontend: [https://nextract-frontend.vercel.app](https://nextract-frontend.vercel.app/)  
+Backend: [https://nextract-api.onrender.com](https://nextract-backend.onrender.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 📄 Upload PDF, PPTX, or DOCX files
+- 🧠 Abstractive & Extractive summarization using HuggingFace Transformers
+- 📥 Download summaries in `.txt`, `.pdf`, or `.docx`
+- 🔐 Firebase Authentication (Login/Signup)
+- 🌗 Light/Dark mode toggle
+- ⚡ Responsive and modern UI
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+- **Frontend:** React.js, Tailwind CSS, Vite
+- **Auth:** Firebase Authentication
+- **Backend:** Flask (deployed separately on Render)
+- **AI Models:** HuggingFace Transformers (BART, T5, etc.)
+
+
+## 🔧 Setup Instructions
+
+```bash
+git clone https://github.com/Paridhi1920/nextract-frontend.git
+cd nextract-frontend
+npm install
+npm run dev
+
+
