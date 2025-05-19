@@ -6,6 +6,8 @@ import { auth } from './firebase';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Summarizer from './components/Summarizer';
+import Home from './pages/Home';
+import About from './pages/About';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -16,7 +18,7 @@ function App() {
       setUser(currentUser);
       setAuthChecked(true);
     });
-    return () => unsubscribe(); // Cleanup
+    return () => unsubscribe();
   }, []);
 
   if (!authChecked) return <div className="text-white text-center mt-10">Loading...</div>;
@@ -24,9 +26,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={user ? <Navigate to="/summarize" /> : <Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />      
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/login" element={user ? <Navigate to="/summarize" /> : <Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/summarize" element={user ? <Summarizer /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
