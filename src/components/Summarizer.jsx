@@ -31,8 +31,13 @@ const Summarizer = () => {
     formData.append("file", file);
     formData.append("length", length);
 
+    const isLocalhost = window.location.hostname === "localhost";
+    const BASE_URL = isLocalhost
+      ? "http://localhost:5000"
+      : "https://nextract-backend.onrender.com";
+
     try {
-      const response = await fetch("https://nextract-backend.onrender.com/uploads", {
+      const response = await fetch(`${BASE_URL}/uploads`, {
         method: "POST",
         body: formData,
       });
@@ -130,7 +135,14 @@ const Summarizer = () => {
             />
             <span style={styles.slider}></span>
           </label>
-          <button onClick={handleLogout} style={{ ...styles.button, marginTop: "10px", backgroundColor: "#ff5c5c" }}>
+          <button
+            onClick={handleLogout}
+            style={{
+              ...styles.button,
+              marginTop: "10px",
+              backgroundColor: "#ff5c5c",
+            }}
+          >
             Logout
           </button>
         </div>
@@ -143,7 +155,9 @@ const Summarizer = () => {
           onChange={handleFileChange}
           style={currentStyles.input}
         />
-        {file && <p style={{ marginTop: "5px", fontSize: "0.9rem" }}>📄 {file.name}</p>}
+        {file && (
+          <p style={{ marginTop: "5px", fontSize: "0.9rem" }}>📄 {file.name}</p>
+        )}
 
         <select
           value={length}
@@ -160,14 +174,25 @@ const Summarizer = () => {
         </button>
 
         {error && (
-          <p style={{ color: "#ff5c5c", marginTop: "15px", textAlign: "center" }}>{error}</p>
+          <p
+            style={{
+              color: "#ff5c5c",
+              marginTop: "15px",
+              textAlign: "center",
+            }}
+          >
+            {error}
+          </p>
         )}
 
         {summary && (
           <div style={currentStyles.summaryBox}>
             <h3 style={{ marginBottom: "10px", color: "#00bfff" }}>Summary:</h3>
             <p>{summary}</p>
-            <button onClick={downloadTxt} style={{ ...styles.button, marginTop: "20px" }}>
+            <button
+              onClick={downloadTxt}
+              style={{ ...styles.button, marginTop: "20px" }}
+            >
               Download as .TXT
             </button>
             <button
